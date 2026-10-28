@@ -12,7 +12,7 @@ st.set_page_config(page_title="UFPI · Ocupação de vagas do SiSU", layout="wid
 css()
 banner()
 st.navigation(
-    [st.Page("views/visao_geral.py", title="Visão geral", icon="📊", default=True),
-     st.Page("views/candidato.py", title="Acompanhamento do candidato", icon="🔎")],
+    [st.Page("views/visao_geral.py", title="Visão geral", icon=":material/dashboard:", default=True),
+     st.Page("views/candidato.py", title="Acompanhamento do candidato", icon=":material/person_search:")],
     position="sidebar",
 ).run()

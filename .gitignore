@@ -1,4 +1,3 @@
 __pycache__/
 .venv/
 .streamlit/secrets.toml
-dados_sisu.xlsx

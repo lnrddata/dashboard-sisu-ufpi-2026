@@ -35,12 +35,16 @@ def norm(s) -> str:
     return re.sub(r"\s*-\s*", " - ", re.sub(r"\s+", " ", s)).strip().upper()
 
 
-def _grau(s) -> str:
-    g = norm(s)
-    if "ABI" in g:
-        return "ABI"
-    return {"TECNOLOGO": "Tecnólogo", "TECNOLOGICO": "Tecnólogo",
-            "LICENCIATURA - BACHARELADO": "Licenciatura/Bacharelado"}.get(g, g.title())
+_MINUSCULAS = {"da", "de", "do", "das", "dos", "e"}
+
+
+def _titulo(s) -> str:
+    """Caixa de título em português: 'CIÊNCIA DA COMPUTAÇÃO' → 'Ciência da Computação' (da/de/do/das/dos/e ficam em minúsculas)."""
+    return " ".join(p.lower() if i and p.lower() in _MINUSCULAS else p for i, p in enumerate(str(s).title().split(" ")))
+
+
+def _grau(s):
+    return s
 
 
 def _semestre(s) -> str:
@@ -66,7 +70,7 @@ def _carregar(src, mtime: float = 0.0) -> dict:
         d["curso_key"] = [ALIAS.get((a, k), k) for a, k in zip(d.centro, d.curso.map(norm))]
     for d in (v, c, l):
         for k, o in zip(d.curso_key, d.curso):
-            lab.setdefault(k, str(o).title() if str(o).isupper() else str(o))
+            lab.setdefault(k, _titulo(o) if str(o).isupper() else str(o))
         d["curso"] = d.curso_key.map(lab)
     for d in (v, c, l):
         d["grau"] = d.grau.map(_grau)

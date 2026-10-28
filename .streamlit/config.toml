@@ -6,5 +6,8 @@ secondaryBackgroundColor = "#FFFFFF"
 textColor = "#0B1F3A"
 font = "sans serif"
 
+[client]
+toolbarMode = "minimal"   # oculta o botão "Deploy" (em inglês) e deixa só o menu essencial
+
 [browser]
 gatherUsageStats = false
