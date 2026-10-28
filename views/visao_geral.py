@@ -70,7 +70,7 @@ lf = filtrar(l[~l.convocado], {k: sel[k] for k in ("centro", "curso_key", "cota"
 
 # ---------------------------------------------------------------- KPIs
 BLUE_L = "#D6E2F5"
-nv, ncv, npd = int(vf.vagas.sum()), len(cf), int(cf.pend.sum())
+nv, ncv = int(vf.vagas.sum()), len(cf)
 ocup = int(cv.mat.sum())
 pre = ocup / nv if nv else np.nan
 nab = max(nv - ocup, 0)                                   # vagas remanescentes (com remanejamento entre cotas)
@@ -81,8 +81,6 @@ cards = [("Vagas ofertadas", fi(nv), "conforme quadro de vagas", AZUL, icone("ca
          ("Vagas ocupadas", fi(ocup), "matrículas confirmadas", AZUL, icone("check")),
          ("Ocupação", fp(pre), "ocupadas ÷ ofertadas", AZUL, icone("grafico")),
          ("Vagas remanescentes", fi(nab), "ofertadas − ocupadas", AZUL, icone("vagas"))]
-if npd:
-    cards.append(("Pendentes", fi(npd), "sem matrícula nem motivo", NAVY, icone("pendente")))
 kpi_grid(cards)
 peq = [("Cursos ofertados", fi(vf.groupby(["centro", "curso_key"]).ngroups), icone("livro")),
        ("Centros", fi(len(set(vf.centro) | set(cf.centro))), icone("predio")),
